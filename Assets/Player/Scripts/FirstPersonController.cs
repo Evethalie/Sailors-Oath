@@ -23,6 +23,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private bool canCrouch = true;
     [SerializeField] private bool canUseHeadbob = true;
     [SerializeField] private bool slideOnSlopes = true;
+    [SerializeField] private bool canZoom = true;
     #endregion
 
     #region Movement Parameters
