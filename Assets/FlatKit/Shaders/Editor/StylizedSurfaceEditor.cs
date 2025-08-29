@@ -34,7 +34,7 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
     private static readonly int LightmapDirectionYaw = Shader.PropertyToID("_LightmapDirectionYaw");
     private const string OutlineSmoothNormalsKeyword = "DR_OUTLINE_SMOOTH_NORMALS";
     private const string RenderingOptionsName = "Rendering Options";
-    private const string UnityVersion = "NLC6GO";
+    private const string UnityVersion = "NLC6GM";
 
     private void DrawStandard(MaterialProperty property) {
         // Remove everything in square brackets.
@@ -45,7 +45,7 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
         }
 
         var guiContent = new GUIContent(cleanName, tooltip);
-        if (property.propertyType == ShaderPropertyType.Texture) {
+        if (property.type == MaterialProperty.PropType.Texture) {
             if (!property.name.Contains("_BaseMap")) {
                 EditorGUILayout.Space(10);
             }
@@ -323,7 +323,7 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
             }
 
             if (!skipProperty &&
-                property.propertyType == ShaderPropertyType.Color &&
+                property.type == MaterialProperty.PropType.Color &&
                 property.colorValue == HashColor) {
                 property.colorValue = _target.GetColor(ColorPropertyName);
             }
@@ -344,7 +344,7 @@ public class StylizedSurfaceEditor : BaseShaderGUI {
                 EditorGUI.indentLevel += 1;
             }
 
-            bool hideInInspector = (property.propertyFlags & ShaderPropertyFlags.HideInInspector) != 0;
+            bool hideInInspector = (property.flags & MaterialProperty.PropFlags.HideInInspector) != 0;
             if (!hideInInspector && !skipProperty) {
                 EditorGUI.BeginChangeCheck();
                 DrawStandard(property);
