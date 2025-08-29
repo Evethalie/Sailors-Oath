@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class InputReader : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
@@ -7,6 +9,10 @@ public class InputReader : MonoBehaviour, InputSystem_Actions.IPlayerActions
     
     public Vector2 moveInput;
     public Vector2 lookInput;
+
+    public bool sprintPressed;
+    public event Action CrouchPressed;
+    public event Action JumpPressed;
     private void OnEnable()
     {
         if (controls == null)
@@ -45,12 +51,14 @@ public class InputReader : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+       if(!context.performed) return;
+       CrouchPressed?.Invoke();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if(!context.performed) return;
+        JumpPressed?.Invoke();
     }
 
     public void OnPrevious(InputAction.CallbackContext context)
@@ -65,6 +73,13 @@ public class InputReader : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if (context.performed)
+        {
+            sprintPressed = true;
+        }
+        else if (context.canceled)
+        {
+            sprintPressed = false;
+        }
     }
 }
